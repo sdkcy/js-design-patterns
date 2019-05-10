@@ -22,20 +22,25 @@ AdvancedMediaPlayer.prototype.playMp4 = function (fileName) {
 
 
 const VlcPlayer = function () {
+    AdvancedMediaPlayer.call(this);
 };
 VlcPlayer.prototype= Object.create(AdvancedMediaPlayer.prototype);
+VlcPlayer.prototype.constructor = VlcPlayer;
 VlcPlayer.prototype.playVlc = function (fileName) {
-    console.log("Playing vlc file. Name: "+ fileName);
+    console.log("Playing vlc file... Name: "+ fileName);
 };
 
 const Mp4Player = function () {
+    AdvancedMediaPlayer.call(this);
 };
 Mp4Player.prototype= Object.create(AdvancedMediaPlayer.prototype);
+Mp4Player.prototype.constructor = Mp4Player;
 Mp4Player.prototype.playMp4 = function (fileName) {
-    console.log("Playing mp4 file. Name: "+ fileName);
+    console.log("Playing mp4 file... Name: "+ fileName);
 };
 
 const MediaAdapter = function (audioType) {
+    MediaPlayer.call(this);
     this.mediaPlayer = null;
     if (audioType === "vlc") {
         this.mediaPlayer = new VlcPlayer();
@@ -45,6 +50,7 @@ const MediaAdapter = function (audioType) {
 };
 
 MediaAdapter.prototype = Object.create(MediaPlayer.prototype);
+MediaAdapter.prototype.constructor = MediaAdapter;
 
 MediaPlayer.prototype.play = function (audioType, fileName) {
     if (audioType === "vlc") {
@@ -55,13 +61,15 @@ MediaPlayer.prototype.play = function (audioType, fileName) {
 };
 
 const AudioPlayer = function () {
+    MediaPlayer.call(this);
     this.adapter = null;
 };
 AudioPlayer.prototype = Object.create(MediaPlayer.prototype);
+AudioPlayer.prototype.constructor = AudioPlayer;
 
 AudioPlayer.prototype.play = function (audioType, fileName) {
     if(audioType === "mp3"){
-        console.log("Playing Mp3 file. File Name:", fileName);
+        console.log("Playing Mp3 file... Name:", fileName);
     }else if(audioType === "vlc" || audioType === "mp4"){
         this.adapter = new MediaAdapter(audioType);
         this.adapter.play(audioType, fileName)
@@ -72,7 +80,7 @@ AudioPlayer.prototype.play = function (audioType, fileName) {
 
 const audioPlayer = new AudioPlayer();
 
-audioPlayer.play("mp3", "beyond the horizon.mp3");
-audioPlayer.play("mp4", "alone.mp4");
-audioPlayer.play("vlc", "far far away.vlc");
-audioPlayer.play("avi", "mind me.avi");
+audioPlayer.play("mp3", "sdk.mp3");
+audioPlayer.play("mp4", "sdk.mp4");
+audioPlayer.play("vlc", "sdk.vlc");
+audioPlayer.play("avi", "sdk.avi");
