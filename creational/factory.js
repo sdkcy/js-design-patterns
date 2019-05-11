@@ -7,6 +7,8 @@
 "use strict";
 
 /* use to build the concrete objects */
+/* Factory pattern: Obj creation process => to factory */
+
 const Food = function (name) {
     this.name = name;
 };

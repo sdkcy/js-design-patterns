@@ -7,66 +7,96 @@
 "use strict";
 
 /* use to save complex constructors */
+
+//Interface Farm
+const Farm = function () {
+};
+Farm.prototype.create = function () {
+};
+Farm.prototype.plant = function () {
+};
+Farm.prototype.fertilize = function () {
+};
+Farm.prototype.crop = function () {
+};
+Farm.prototype.get = function () {
+};
+
+
 const Fruit = function (name) {
     this.name = name;
 };
-const FruitBuilder = function () {
-    this.fruit = null;
-};
-
-FruitBuilder.prototype.create = function (name) {
-    this.fruit = new Fruit(name);
-};
-
-FruitBuilder.prototype.plant = function () {
-    console.log(this.fruit.name, " is planted");
-};
-
-FruitBuilder.prototype.fertilize = function () {
-    console.log(this.fruit.name, " is fertilized");
-};
-
-FruitBuilder.prototype.crop = function () {
-    console.log(this.fruit.name, " is cropped");
-};
-
-FruitBuilder.prototype.get = function () {
-    return this.fruit;
-};
-
 const Vegetable = function (name) {
     this.name = name;
 };
 
-const VegetableBuilder = function () {
+
+//Implemented from Farm
+const FruitFarm = function () {
+    Farm.call(this);
+    this.fruit = null;
+};
+
+FruitFarm.prototype = Object.create(Farm.prototype);
+
+FruitFarm.prototype.constructor = FruitFarm;
+
+FruitFarm.prototype.create = function (name) {
+    this.fruit = new Fruit(name);
+};
+
+FruitFarm.prototype.plant = function () {
+    console.log(this.fruit.name, " is planted");
+};
+
+FruitFarm.prototype.fertilize = function () {
+    console.log(this.fruit.name, " is fertilized");
+};
+
+FruitFarm.prototype.crop = function () {
+    console.log(this.fruit.name, " is cropped");
+};
+
+FruitFarm.prototype.get = function () {
+    return this.fruit;
+};
+
+
+//Implemented from Farm
+const VegetableFarm = function () {
     this.vegetable = null;
 };
 
-VegetableBuilder.prototype.create = function (name) {
+VegetableFarm.prototype = Object.create(Farm.prototype);
+
+VegetableFarm.prototype.constructor = VegetableFarm;
+
+VegetableFarm.prototype.create = function (name) {
     this.vegetable = new Vegetable(name);
 };
 
-VegetableBuilder.prototype.plant = function () {
+VegetableFarm.prototype.plant = function () {
     console.log(this.vegetable.name, " is planted");
 };
 
-VegetableBuilder.prototype.fertilize = function () {
+VegetableFarm.prototype.fertilize = function () {
     console.log(this.vegetable.name, " is fertilized");
 };
 
-VegetableBuilder.prototype.crop = function () {
+VegetableFarm.prototype.crop = function () {
     console.log(this.vegetable.name, " is cropped");
 };
 
-VegetableBuilder.prototype.get = function () {
+VegetableFarm.prototype.get = function () {
     return this.vegetable;
 };
 
+
+//Builder class
 const PlantBuilder = function () {
 };
 
-PlantBuilder.prototype.build = function (Builder, name) {
-    const builder = new Builder();
+PlantBuilder.prototype.build = function (builder, name) {
     builder.create(name);
     builder.plant();
     builder.fertilize();
@@ -76,6 +106,7 @@ PlantBuilder.prototype.build = function (Builder, name) {
 };
 
 const plantBuilder = new PlantBuilder();
-const fruit = plantBuilder.build(FruitBuilder, "banana");
-const vegetable = plantBuilder.build(VegetableBuilder, "tomato");
-console.log("fruit name", fruit.name);
+const fruitFarm = new FruitFarm();
+const banana = plantBuilder.build(fruitFarm, "banana");
+const vegetableFarm = new VegetableFarm();
+const onion = plantBuilder.build(vegetableFarm, "onion");
