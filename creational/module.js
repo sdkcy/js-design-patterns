@@ -12,33 +12,38 @@ const Counter1 = {
     counter: 0,
     incrementCounter: function () {
         this.counter++;
-        this.log();
+        this.log("Increase: ");
     },
-    incrementCounterTo: function (to) {
+    startCounter: function (to) {
+        this.counter = 0;
+        console.log("Counter started: ");
         for (let i = 0; i < to; i++) {
             this.incrementCounter();
         }
     },
-    log: function () {
-        console.log("Counter with Object Literal", this.counter);
+    log: function (msg) {
+        console.log("Counter with Object Literal. \n", msg,  this.counter);
     }
 };
 
 Counter1.incrementCounter();
 Counter1.counter = 3; //counter value can be achieve and reassign
-Counter1.log();
+Counter1.log("Counter is set to ");
 
 
+//Revealing Module Pattern
 /* public&private encapsulation using closure(IIFE) and return Object Literal*/
 const Counter2 = (function () {
     let counter = 0;
 
     const incrementCounter = function () {
         counter++;
-        log();
+        log("Increase: ");
     };
 
-    const incrementCounterTo = function (to) {
+    const startCounter = function (to) {
+        counter = 0;
+        console.log("Counter started: ");
         for (let i = 0; i < to; i++) {
             incrementCounter();
         }
@@ -46,21 +51,21 @@ const Counter2 = (function () {
 
     const decrementCounter = function () {
         counter--;
-        log();
+        log("Decrease: ");
     };
 
     const resetCounter = function () {
         counter = 0;
-        log();
+        log("Reset: ");
     };
 
-    const log = function () {
-        console.log("Counter with Module Pattern", counter);
+    const log = function (msg) {
+        console.log("Counter with Module Pattern.\n", msg, counter);
     };
 
     return {
         incrementCounter,
-        incrementCounterTo,
+        startCounter,
         decrementCounter,
         resetCounter
     }
@@ -69,6 +74,6 @@ const Counter2 = (function () {
 
 Counter2.incrementCounter();
 Counter2.decrementCounter();
-Counter2.incrementCounterTo(8);
+Counter2.startCounter(8);
 Counter2.resetCounter();
 
