@@ -7,31 +7,55 @@
 "use strict";
 
 /* use to build the concrete objects */
-const Factory = function () {};
+const Food = function (name) {
+    this.name = name;
+};
 
-Factory.prototype.create = function (Product) {
-    this.types = {};
-    let product;
-    if(this.types[Product]){
-        return this.types[Product];
-    }else {
-        product = new Product();
-        this.types[Product] = product
+Food.prototype.getName = function () {
+    console.log("This food name is ", this.name);
+};
+const Fruit = function (name) {
+    Food.call(this, name);
+};
+Fruit.prototype = Object.create(Food.prototype);
+Fruit.prototype.constructor = Fruit;
+
+const Vegetable = function (name) {
+    Food.call(this, name);
+};
+Vegetable.prototype = Object.create(Food.prototype);
+Vegetable.prototype.constructor = Vegetable;
+
+const Meat = function (name) {
+    Food.call(this, name);
+};
+Meat.prototype = Object.create(Food.prototype);
+Meat.prototype.constructor = Meat;
+
+const Factory = function () {
+    this.products = {};
+};
+
+Factory.prototype.register = function (Product, type) {
+    if (!this.products[type]) {
+        this.products[type] = Product;
     }
-    return product;
 };
 
-const Fruit = function () {
-    console.log("Fruit is created");
-};
-const Vegetable = function () {
-    console.log("Vegetable is created");
-};
-const Meat = function () {
-    console.log("Meat is created");
+Factory.prototype.create = function (type, name) {
+    if (this.products[type]) {
+        return new this.products[type](name);
+    }
+    return null;
 };
 
 const factory = new Factory();
-const fruit = factory.create(Fruit);
-const veg = factory.create(Vegetable);
-const meat = factory.create(Meat);
+factory.register(Fruit, "fruit");
+factory.register(Vegetable, "vegetable");
+factory.register(Meat, "meat");
+const fruit = factory.create("fruit", "banana");
+const veg = factory.create("vegetable", "vegetable");
+const meat = factory.create("meat", "entrecote");
+fruit.getName();
+veg.getName();
+meat.getName();
