@@ -4,6 +4,39 @@
  * Created by Sıdıka ÇAY on 2019-04-27
  */
 
+"use strict";
+
+/* inheritance and override */
+
+//Base class
+const Human = function (name) {
+    this.name = name;
+};
+
+Human.prototype.sayMyName = function () {
+    console.log("My name is ", this.name);
+};
+
+//Inheritance from Human
+const Sidika = function (name, job) {
+    Human.call(this, name);
+    this.job = job;
+};
+
+Sidika.prototype = Object.create(Human.prototype);
+
+Sidika.prototype.constructor = Sidika;
+
+Sidika.prototype.sayMyName = function () {
+    console.log("New line for inheritance");
+    Human.prototype.sayMyName.call(this);
+    console.log("and my job is", this.job);
+};
+
+const sidika = new Sidika("Sidika", "Developer");
+sidika.sayMyName();
+
+
 /* clone object prototype */
 /*
 const Human = function () {
@@ -22,28 +55,3 @@ function clone(source, destination) {
     return destination;
 }
 */
-
-
-/* inheritance and override */
-const Human = function (name) {
-    this.name = name;
-};
-
-Human.prototype.sayMyName = function () {
-    console.log("My name is ", this.name);
-};
-
-const Sidika = function (name) {
-    Human.call(this, name);
-};
-
-Sidika.prototype = Object.create(Human.prototype);
-
-Sidika.prototype.sayMyName = function () {
-    console.log("New line for inheritance");
-    Human.prototype.sayMyName.call(this);
-};
-
-const sidika = new Sidika("Sidika");
-sidika.sayMyName();
-
