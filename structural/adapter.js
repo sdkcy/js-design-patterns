@@ -52,7 +52,7 @@ const MediaAdapter = function (audioType) {
 MediaAdapter.prototype = Object.create(MediaPlayer.prototype);
 MediaAdapter.prototype.constructor = MediaAdapter;
 
-MediaPlayer.prototype.play = function (audioType, fileName) {
+MediaAdapter.prototype.play = function (audioType, fileName) {
     if (audioType === "vlc") {
         this.mediaPlayer.playVlc(fileName);
     }else if(audioType==="mp4"){
