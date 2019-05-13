@@ -26,8 +26,25 @@ Gesture.prototype.pinch = function () {
 };
 
 
-const Screen = function () {
+//Bridge Interface
+const Output = function () {
 };
+Output.prototype.click = function () {
+};
+Output.prototype.move = function () {
+};
+Output.prototype.drag = function () {
+};
+Output.prototype.zoom = function () {
+};
+
+
+//Concrete bridge implementer class of the Output Interface
+const Screen = function () {
+    Output.call(this);
+};
+Screen.prototype = Object.create(Output.prototype);
+Screen.prototype.constructor = Screen;
 
 Screen.prototype.click = function () {
     console.log("Screen clicked");
@@ -42,10 +59,38 @@ Screen.prototype.zoom = function () {
     console.log("Screen zoomed");
 };
 
-const screen = new Screen();
-const gesture = new Gesture(screen);
 
-gesture.tap();
-gesture.swipe();
-gesture.pan();
-gesture.pinch();
+//Concrete bridge implementer class of the Output Interface
+const Audio = function () {
+};
+Audio.prototype = Object.create(Output.prototype);
+Audio.prototype.constructor = Audio;
+
+Audio.prototype.click = function () {
+    console.log("Sound oink");
+};
+Audio.prototype.move = function () {
+    console.log("Sound waves");
+};
+Audio.prototype.drag = function () {
+    console.log("Sound screetch");
+};
+Audio.prototype.zoom = function () {
+    console.log("Sound volume up");
+};
+
+
+const screen = new Screen();
+const audio = new Audio();
+const screenGesture = new Gesture(screen);
+const audioGesture = new Gesture(audio);
+
+screenGesture.tap();
+screenGesture.swipe();
+screenGesture.pan();
+screenGesture.pinch();
+
+audioGesture.tap();
+audioGesture.swipe();
+audioGesture.pan();
+audioGesture.pinch();
