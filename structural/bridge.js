@@ -6,12 +6,12 @@
 
 "use strict";
 
-/* use to allow to work together two components which have own interface */
+/* decouple abstraction from it's implementations */
 
+//Refined abstraction
 const Gesture = function (output) {
     this.output = output;
 };
-
 Gesture.prototype.tap = function () {
     this.output.click();
 };
@@ -26,7 +26,6 @@ Gesture.prototype.pinch = function () {
 };
 
 
-//Bridge Interface
 const Output = function () {
 };
 Output.prototype.click = function () {
@@ -39,7 +38,7 @@ Output.prototype.zoom = function () {
 };
 
 
-//Concrete bridge implementer class of the Output Interface
+//Concrete bridge implementer class
 const Screen = function () {
     Output.call(this);
 };
@@ -60,7 +59,7 @@ Screen.prototype.zoom = function () {
 };
 
 
-//Concrete bridge implementer class of the Output Interface
+//Concrete bridge implementer class
 const Audio = function () {
 };
 Audio.prototype = Object.create(Output.prototype);
