@@ -8,6 +8,7 @@
 
 /* Provides an interface similar to real object */
 /* Manage a reference which lets the proxy access to real object */
+
 const GeoCoder = function () {
 };
 
