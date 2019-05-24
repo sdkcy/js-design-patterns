@@ -8,6 +8,7 @@
 
 /* use to: if an instance does not exist, create an instance of a class or */
 /*         if an instance already exist, return reference of the instance */
+
 const Person = function () {
     if(Person._instance) {
         return Person._instance;
